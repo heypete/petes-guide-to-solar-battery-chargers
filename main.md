@@ -23,26 +23,26 @@ These shortcomings led me to investigate alternative chargers and create this pa
 5. They are available in huge abundance at a reasonable cost and in a variety of shapes, sizes, and form factors.
 6. They can be recharged numerous times (typically several hundred times).
 
-However, they can be damaged (sometimes to the point of bursting into flames) if overcharged, overdischarged, or otherwise abused. Thus, it is crucial to charge them in a regulated, controlled manner.
+#### Charging Requirements
+Lithium-ion batteries can be damaged (sometimes to the point of bursting into flames) if overcharged, overdischarged, or otherwise abused. Thus, it is crucial to charge them in a regulated, controlled manner. The typical approach is called "constant-current/constant-voltage", [described below](#constant-currentconstant-voltage-charging).
 
+##### Constant Current/Constant Voltage Charging
 The typical charge profile (see [Figure 1](#figure1)) for a lithium-ion battery is as follows:
 1. If the battery voltage is below a certain level, gently "precharge" it until it's ready for the full charging current.
-2. Charge at a constant, safe current.
-   - The safe current for a given battery depends on its capacity *C* and is typically charged at 0.5C. For example, a battery with a capacity of 1000mAh has a C of 1A. A safe current to charge it would be 0.5C, or 500mA.
-   - As the battery charges, the voltage will rise.
-3. When the battery voltage reaches 4.2 volts, charge at a constant current.
+2. Charge at a constant current until the battery voltage reaches 4.2 volts.
+   - The maximum safe current for a given battery depends on its capacity *C* and is typically around 0.5C. For example, a battery with a capacity of 1000mAh (or 1Ah) has a C of 1A and a a typical safe charging current would be (0.5 \* 1A) = 0.5A, while a battery with a capacity of 2000mAh (or 2Ah) has a C of 2A and a safe charging current of 1A. Check with the battery's datasheet for details.
+3. When the battery voltage reaches 4.2 volts, charge at a constant voltage.
    - As the battery continues to charge at a constant voltage, the charge current needed to maintain that voltage will decrease over time.
-   - When the charge current falls below a certain threshold, generally around 0.1C, charging stops.
-4. Once the battery voltage decreases below a certain threshold (whether due to self-discharge or being drawn down by the load), a new charge cycle is started and the battery charged again.
+4. When the charge current falls below a certain threshold, generally around 0.1C, stop charging.
+5. Once the battery voltage decreases below a certain threshold (whether due to self-discharge or being drawn down by the load), a new charge cycle is started and the battery charged again.
    - Unlike lead-acid batteries, lithium-ion batteries are intolerant of "float" charging where a constant charging voltage is applied to counteract self-discharge. This can rapidly destroy a li-ion battery.
-   
+
+Note that it is not strictly required to charge at a constant current; a time-varying current can be used so long as the current does not exceed the maximum safe limit. It's always safe to charge a battery slower than the maximum.
+
 <a id="figure1"></a>
 ![Li-Ion Battery Charge Profile Graph](images/battery-charge-profile.png)  
 *Figure 1: Lithium-Ion Charging Profile (Image source: Shanghai Ruyun Electronics Co, Ltd., [CN3791 datasheet](http://www.consonance-elec.com/en/72.html).)*
 
-#### Charging Requirements
-##### Constant Current/Constant Voltage Charging
-##### Charge Termination
 ### Battery Protection
 #### Battery Overdischarge Voltage Considerations
 #### DW01A
