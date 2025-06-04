@@ -17,8 +17,27 @@ These shortcomings led me to investigate alternative chargers and create this pa
 ### Li-Ion Batteries
 [Lithium-ion batteries](https://en.wikipedia.org/wiki/Lithium-ion_battery) have many desirable properties that make them useful for powering electronics:
 1. They provide a convenient voltage (nominally 3.7V, up to 4.2V).
-2. They do not exhibit any memory effect, unlike other battery chemistries.
-3. Their charging requirements are fairly reasonable [(constant-current/constant voltage)](#constant-current/constant-voltage-charging)
+2. They are quite energy-dense and able to store a lot of energy in a small volume.
+3. They do not exhibit any memory effect, unlike some other battery chemistries.
+4. Their charging requirements are [easy to meet](#constant-currentconstant-voltage-charging).
+5. They are available in huge abundance at a reasonable cost and in a variety of shapes, sizes, and form factors.
+6. They can be recharged numerous times (typically several hundred times).
+
+However, they can be damaged (sometimes to the point of bursting into flames) if overcharged, overdischarged, or otherwise abused. Thus, it is crucial to charge them in a regulated, controlled manner.
+
+The typical charge profile for a lithium-ion battery is as follows:
+1. If the battery voltage is below a certain level, gently "precharge" it until it's ready for the full charging current.
+2. Charge at a constant, safe current.
+   - The safe current for a given battery depends on its capacity *C* and is typically charged at 0.5C. For example, a battery with a capacity of 1000mAh has a C of 1A. A safe current to charge it would be 0.5C, or 500mA.
+   - As the battery charges, the voltage will rise.
+3. When the battery voltage reaches 4.2 volts, charge at a constant current.
+   - As the battery continues to charge at a constant voltage, the charge current needed to maintain that voltage will decrease over time.
+   - When the charge current falls below a certain threshold, generally around 0.1C, charging stops.
+4. Once the battery voltage decreases below a certain threshold (whether due to self-discharge or being drawn down by the load), a new charge cycle is started and the battery charged again.
+   - Unlike lead-acid batteries, lithium-ion batteries are intolerant of "float" charging where a constant voltage is applied to counteract self-discharge. This can rapidly destroy a battery.
+   
+
+![Li-Ion Battery Charge Profile Graph](images/battery-charge-profile.png)
 
 #### Charging Requirements
 ##### Constant Current/Constant Voltage Charging
@@ -67,7 +86,7 @@ $0.022 ($0.45/20)
 #### CN3163
 
 ***
-### Switching Chargers
+### Switch-Mode Chargers
 #### "MPPT" Chargers
 ###### CN3791
 
