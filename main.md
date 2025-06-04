@@ -54,7 +54,7 @@ The DW01A is a small, SOT-23-6-sized battery protection IC. It's often seen on i
 
 Unlike the other protection ICs mentioned below, it requires two external MOSFETs for two purposes: first, to act as a switch to disconnect the battery when needed, and secondly to use the MOSFETs' turn-on resistance as a surrogate current-sense resistor to detect overcurrent and short circuits.
 
-I've commonly seen it paired with an 8205A dual MOSFET whose R~ds(ON)~ is such that the DW01A's overcurrent protection kicks in around 3A. The DW01A's low-voltage cutoff is 2.5V.
+I've commonly seen it paired with an 8205A dual MOSFET whose Rds(ON) is such that the DW01A's overcurrent protection kicks in around 3A. The DW01A's low-voltage cutoff is 2.5V.
 
 More information about the DW01A can be [found here](https://www.best-microcontroller-projects.com/dw01a.html). 
 
