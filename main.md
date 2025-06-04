@@ -38,7 +38,7 @@ The typical charge profile (see [Figure 1](#figure1)) for a lithium-ion battery 
    
 
 ![Li-Ion Battery Charge Profile Graph](images/battery-charge-profile.png)
-<a id="<a id="section_id"></a>"></a>
+<a id="figure1"></a>
 *Figure 1: Lithium-Ion Charging Profile (Image source: Shanghai Ruyun Electronics Co, Ltd., [CN3791 datasheet](http://www.consonance-elec.com/en/72.html).)*
 
 #### Charging Requirements
