@@ -28,7 +28,7 @@ Lithium-ion batteries can be damaged (sometimes to the point of bursting into fl
 
 ##### Constant Current/Constant Voltage Charging
 The typical charge profile (see [Figure 1](#figure1)) for a lithium-ion battery is as follows:
-1. If the battery voltage is below a certain level, gently "precharge" it until it's ready for the full charging current.
+1. If the battery voltage is below a certain level, gently "precharge" it at a lower current until it's ready for the full charging current.
 2. Charge at a constant current until the battery voltage reaches 4.2 volts.
    - The maximum safe current for a given battery depends on its capacity *C* and is typically around 0.5C. For example, a battery with a capacity of 1000mAh (or 1Ah) has a C of 1A and a a typical safe charging current would be (0.5 \* 1A) = 0.5A, while a battery with a capacity of 2000mAh (or 2Ah) has a C of 2A and a safe charging current of 1A. Check with the battery's datasheet for details.
 3. When the battery voltage reaches 4.2 volts, charge at a constant voltage.
