@@ -37,8 +37,7 @@ The typical charge profile (see [Figure 1](#figure1)) for a lithium-ion battery 
    - Unlike lead-acid batteries, lithium-ion batteries are intolerant of "float" charging where a constant charging voltage is applied to counteract self-discharge. This can rapidly destroy a li-ion battery.
    
 
-![Li-Ion Battery Charge Profile Graph](images/battery-charge-profile.png)
-<a id="figure1"></a>
+![Li-Ion Battery Charge Profile Graph](images/battery-charge-profile.png)  
 *Figure 1: Lithium-Ion Charging Profile (Image source: Shanghai Ruyun Electronics Co, Ltd., [CN3791 datasheet](http://www.consonance-elec.com/en/72.html).)*
 
 #### Charging Requirements
