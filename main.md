@@ -8,13 +8,18 @@ The WisBlock base boards include a [TP4054](#TP4054) -- a compact (SOT-23-5 size
 While I'll discuss the [TP4054 in more detail later](#TP4054), I wanted to mention that I like it in its intended role as a USB-powered battery charger and will briefly list its shortcomings when connected to a solar panel:
 1. It has a limited input voltage range (4.5-5.5V).
 2. It has a limited charge current (500mA max, configured for 300mA on the RAK board).
-3. It is unable to effectively handle an inherently variable, unstable power supply like a solar panel.
+3. It is unable to effectively handle an inherently variable, unstable power source like a solar panel.
 
 These shortcomings led me to investigate alternative chargers and create this page. I hope you find it useful.
 
 ***
 ## Technical Background
 ### Li-Ion Batteries
+[Lithium-ion batteries](https://en.wikipedia.org/wiki/Lithium-ion_battery) have many desirable properties that make them useful for powering electronics:
+1. They provide a convenient voltage (nominally 3.7V, up to 4.2V).
+2. They do not exhibit any memory effect, unlike other battery chemistries.
+3. Their charging requirements are fairly reasonable [(constant-current/constant voltage)](#constant-current/constant-voltage-charging)
+
 #### Charging Requirements
 ##### Constant Current/Constant Voltage Charging
 ##### Charge Termination
