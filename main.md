@@ -58,7 +58,7 @@ I've commonly seen it paired with an 8205A dual MOSFET whose Rds(ON) is such tha
 
 More information about the DW01A can be [found here](https://www.best-microcontroller-projects.com/dw01a.html). 
 
-In the context of Meshtastic nodes, the low current drawn by the node allows the battery to be discharged down to the minimum safe voltage of 2.5V before the DW01A disconnects the battery. Higher currents will cause the battery voltage to briefly sag to 2.5V and get cut off sooner.
+In the context of Meshtastic nodes, the low current drawn by the node allows the battery to be discharged down to its minimum safe voltage of 2.5V before the DW01A disconnects the battery. Higher currents will cause the battery voltage to briefly sag to 2.5V and get cut off sooner.
 
 Additionally, there have been [reports](https://forum.rakwireless.com/t/factory-reset-on-brownout-mcp120-315-connected-to-the-pins-of-the-rak4631/13737) of RAK-based Meshtastic nodes exhibiting unusual behavior when the battery is discharged to too low a voltage (including factory resetting themselves or failing to restart properly after the battery has recharged somewhat). The DW01A's nominal low-voltage cut-off of 2.5 volts is right at the lower limit of what the RAK 4631 module is rated to work with, so discharging the battery to that limit may cause issues.
 
