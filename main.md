@@ -25,7 +25,7 @@ These shortcomings led me to investigate alternative chargers and create this pa
 
 However, they can be damaged (sometimes to the point of bursting into flames) if overcharged, overdischarged, or otherwise abused. Thus, it is crucial to charge them in a regulated, controlled manner.
 
-The typical charge profile for a lithium-ion battery is as follows:
+The typical charge profile (see [Figure 1](#figure1)) for a lithium-ion battery is as follows:
 1. If the battery voltage is below a certain level, gently "precharge" it until it's ready for the full charging current.
 2. Charge at a constant, safe current.
    - The safe current for a given battery depends on its capacity *C* and is typically charged at 0.5C. For example, a battery with a capacity of 1000mAh has a C of 1A. A safe current to charge it would be 0.5C, or 500mA.
@@ -34,10 +34,12 @@ The typical charge profile for a lithium-ion battery is as follows:
    - As the battery continues to charge at a constant voltage, the charge current needed to maintain that voltage will decrease over time.
    - When the charge current falls below a certain threshold, generally around 0.1C, charging stops.
 4. Once the battery voltage decreases below a certain threshold (whether due to self-discharge or being drawn down by the load), a new charge cycle is started and the battery charged again.
-   - Unlike lead-acid batteries, lithium-ion batteries are intolerant of "float" charging where a constant voltage is applied to counteract self-discharge. This can rapidly destroy a battery.
+   - Unlike lead-acid batteries, lithium-ion batteries are intolerant of "float" charging where a constant charging voltage is applied to counteract self-discharge. This can rapidly destroy a li-ion battery.
    
 
 ![Li-Ion Battery Charge Profile Graph](images/battery-charge-profile.png)
+<a id="<a id="section_id"></a>"></a>
+*Figure 1: Lithium-Ion Charging Profile (Image source: Shanghai Ruyun Electronics Co, Ltd., [CN3791 datasheet](http://www.consonance-elec.com/en/72.html).)*
 
 #### Charging Requirements
 ##### Constant Current/Constant Voltage Charging
