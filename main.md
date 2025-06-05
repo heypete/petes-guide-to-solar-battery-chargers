@@ -1,9 +1,9 @@
-# Pete's Guide to Solar Li-Ion Battery Charger Chips & Circuits
+# Pete's Guide to Solar Li-ion Battery Charger Chips & Circuits
 
 ## Introduction
 Recently I've been building some small, solar-powered [Meshtastic](https://meshtastic.org/) nodes to expand the mesh network coverage in my area. Due to their small size and power efficiency, I have been using [RAK 4631 WisBlock](https://store.rakwireless.com/products/wisblock-meshtastic-starter-kit) systems as the core of these modules.
 
-The WisBlock base boards include a [TP4054](#TP4054) -- a compact (SOT-23-5 sized), linear lithium-ion (Li-Ion) charger chip to charge a Li-Ion battery connected to the module. Power for the TP4054 can be provided by either a 5V USB connection or a 5V solar panel (or other power source) connected to the board's "SOLAR" input connector.
+The WisBlock base boards include a [TP4054](#TP4054) -- a compact (SOT-23-5 sized), linear lithium-ion (Li-ion) charger chip to charge a Li-ion battery connected to the module. Power for the TP4054 can be provided by either a 5V USB connection or a 5V solar panel (or other power source) connected to the board's "SOLAR" input connector.
 
 While I'll discuss the [TP4054 in more detail later](#TP4054), I wanted to mention that I like it in its intended role as a USB-powered battery charger and will briefly list its shortcomings when connected to a solar panel:
 1. It has a limited input voltage range (4.5-5.5V).
@@ -14,7 +14,7 @@ These shortcomings led me to investigate alternative chargers and create this pa
 
 ***
 ## Technical Background
-### Li-Ion Batteries
+### Li-ion Batteries
 [Lithium-ion batteries](https://en.wikipedia.org/wiki/Lithium-ion_battery) have many desirable properties that make them useful for powering electronics:
 1. They provide a convenient voltage (nominally 3.7V, up to 4.2V).
 2. They are quite energy-dense and able to store a lot of energy in a small volume.
@@ -40,7 +40,7 @@ The typical charge profile (see [Figure 1](#figure1)) for a lithium-ion battery 
 Note that it is not strictly required to charge at a constant current; a time-varying current can be used so long as the current does not exceed the maximum safe limit. It's always safe to charge a battery slower than the maximum, though charging can take longer.
 
 <a id="figure1"></a>
-![Li-Ion Battery Charge Profile Graph](images/battery-charge-profile.png)  
+![Li-ion Battery Charge Profile Graph](images/battery-charge-profile.png)  
 *Figure 1: Lithium-Ion Charging Profile (Image source: Shanghai Ruyun Electronics Co, Ltd., [CN3791 datasheet](http://www.consonance-elec.com/en/72.html).)*
 
 ### Battery Protection
@@ -78,7 +78,7 @@ Additionally, there have been [reports](https://forum.rakwireless.com/t/factory-
 
 10A
 
-<https://www.etsy.com/listing/1421193059/li-ion-battery-protection-modules-pcm>
+<https://www.etsy.com/listing/1421193059/Li-ion-battery-protection-modules-pcm>
 
 $ 0.15 (0.77/5)
 #### XB5358D0
