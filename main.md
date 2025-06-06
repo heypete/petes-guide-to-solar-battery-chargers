@@ -31,7 +31,7 @@ The typical charge profile (see [Figure 1](#figure1)) for a lithium-ion battery 
 1. If the battery voltage is below a certain level, gently "precharge" it at a lower current until it's ready for the full charging current.
 2. Charge at a constant current until the battery voltage reaches 4.2 volts.
    - The maximum safe current for a given battery depends on its capacity *C* and is typically around 0.5C. For example, a battery with a capacity of 1000mAh (or 1Ah) has a C of 1A and a a typical safe charging current would be (0.5 \* 1A) = 0.5A, while a battery with a capacity of 2000mAh (or 2Ah) has a C of 2A and a safe charging current of 1A. Check with the battery's datasheet for details.
-   - You can always charge at a lower-than-maximum current.
+   - You can always charge at a lower-than-maximum current, it just takes longer.
 3. When the battery voltage reaches 4.2 volts, charge at a constant voltage.
    - As the battery continues to charge at a constant voltage, the charge current needed to maintain that voltage will decrease over time. See [Figure 1](#figure1).
 4. When the charge current falls below a certain threshold (generally around 0.1C) stop charging.
@@ -80,24 +80,27 @@ One of the features I find to be of particular interest is that it's overdischar
 
 The disadvantage to a 2.9V low-voltage cut-off is that you lose a few usable percent of the battery capacity, but this is typically not an significant issue -- nRF-based Meshtastic nodes can last for days or more on a single 18650 Li-ion battery.
 
-Of interest 
-<https://www.etsy.com/listing/1421193059/Li-ion-battery-protection-modules-pcm>
+Keith at [Voltaic Enclosures](https://www.voltaicenclosures.com/) sells a [standalone XB8089D0 module](https://www.etsy.com/listing/1421193059/Li-ion-battery-protection-modules-pcm) with JST connectors that is very easily added to a circuit.
 
-$ 0.15 (0.77/5)
+As of mid-June 2025, the XB8089D0 costs about $0.15.
+
 #### XB5358D0
-SOT-23-5 device, integrated MOSFETS.
-2.9V
+The XB5358D0 is the essentially the same as the XB8089D0, but in a smaller SOT-23-5 package and an overcurrent limit of 3.3A.
 
-3.3A
-
-$0.17 ($0.86/5)
-### Solar Panels
-#### Constant Current vs. Variable Current
-### Linear vs. MPPT
-#### Linear Charging
-#### Maximum Power Point Tracking
+As of mid-June 2025, the XB5358D0 costs about $0.17.
 
 ***
+### Solar Panels
+#### Constant Current vs. Adaptive Current Charging with Solar Panels
+
+***
+### Types of Chargers
+#### Linear Chargers
+#### Maximum Power Point Tracking Chargers
+#### When does t
+
+***
+## List of Charger ICs
 ### Linear Chargers
 #### TP4054
 $0.022 ($0.45/20)
