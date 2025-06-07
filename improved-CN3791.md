@@ -42,12 +42,25 @@ I wanted my board to fulfil the following requirements:
 As of this writing, I've designed variants that fulfil items #1-8, and intend to add #=10 in the near future.
 
 ### Design Variants
-#### Unprotected "Core" Module
-This is the basic core to all the other boards. The schematic shows all the connections, while the rendering shows the layout.
+#### Unprotected "Core" Module (Mod 0)
+This is the basic core that is used in my other variants. The schematic shows all the connections, while the rendering shows the layout.
 
 [![A schematic of the basic "core" module with no battery protection circuitry.](images/core_schematic-small.png)](images/core_schematic.png)
 
 [![A rendering of the basic "core" module PCB with no battery protection circuitry.](images/core_pcb-small.png)](images/core_pcb.png)
+
+##### Specifications
+- Dimensions: 2" long, 1" wide.
+- Connectors: 5A-rated JST 2.0mm PH connectors.
+- Holes: 0.1"-spaced holes for pin headers. Connected to Vin, LOAD OUT, BAT, GND, and MPP.
+- Input voltage range: 4.5V to 28V. (Absolute max: 30V)
+- Output voltage (BAT): <= 4.2V (max).
+- Output voltage (LOAD): <= 4.32V (w/ 1A charge current).
+- Current (Vin, LOAD, and BAT connectors): 3 A (max).
+- Temperature range: -25C to +70C.
+- Battery protection: None.
+
+##### Remarks
 
 The key feature is the large blue multi-turn potentiometer at the bottom. The voltage between the MPP test point and GND can be measured and the potentiometer adjusted to set the MPP voltage (Set Vmpp = 1.205V at the MPP voltage, though this may need some minor adjustments.).
 
@@ -59,6 +72,26 @@ The C1-x capacitors are the input capacitors, and are located very close to both
 
 Also note the LOAD connector is connected to the inductor's output before the current sense resistor, so load current isn't sensed by the CN3791. Only the battery current and voltage is sensed to allow for proper charge termination. There is, of course, a small voltage difference between the positive BAT and LOAD terminals when current is flowing through the sense resistor, but this is at most equal to 120 milliohms times the current.
 
-The sense lines for the battery voltage and current through the sense resistor use a four-wire kelvin connection under the sense resistor connected to vias leading to the back layer of the board. These lines then come back to the top layer of the board and return to the CN3791 while staying as far as possible from high-current paths and switching components. The datasheet does not call for filtering capacitors on the sense lines.
+The sense lines for the battery voltage and current through the sense resistor use a four-wire kelvin connection under the sense resistor connected to vias leading to the back layer of the board. These lines then come back to the top layer of the board and return to the CN3791 while staying as far as possible from high-current paths and switching components. The datasheet does not call for filtering capacitors on the sense lines. The vias for the sense lines on the top of the board (i.e., the ones immediately to the left of the LOAD OUT hole) are untented and are available to probe with a multimeter.
 
 The current sense resistor is 120 milliohms, which corresponds to a maximum current limit of 1A. The user can replace this resistor with others (e.g. 240 milliohms gives 500mA, 50 milliohms gives 2.4A, etc.).
+
+Each corner has a large, 2 mm mounting hole that is electrically isolated from the board's ground planes. The smaller holes are required for the assembly process, are also isolated from the ground planes, and could be used for mounting if one wishes.
+
+LEDs indicate when the battery is charging (yellow) and when charging is complete (green).
+
+#### Core + DW01A Battery Protection IC (Mod 1)
+
+#### Core + XB8089D0 Battery Protection IC (Mod 2)
+
+#### Core + XB5358D0 Battery Protection IC (Mod 3)
+
+### Hardware Revisions
+- **Pre-production prototype**. Limited run of 10 boards made by JLCPCB. Labeled "V1.0" on silkscreen and handwritten Sharpie markings numbering each unit (P1-P10).
+    - Initial design of the XB8089D0 (Mod 2) variant.
+	- The GND hole next to LOAD OUT was incorrectly sized and is too small for pin headers. This was corrected.
+	- The MPP hole was too close to the potentiometer and made things a bit crowded when holding multimeter probes and a screwdriver. It was moved somewhat further away.
+	- The BAT and GND hole positions and labels were reversed, such that BAT was on the right and GND was on the left. This was the opposite of the Vin/GND and LOAD OUT/GND holes, and was updated to be consistent with the others.
+	- The polarity markings on each of the JST connectors was 0.045" in height, which was very small. The size was increased to 0.060".
+	- The vias for the sense lines were tented and not easily usable as test points.
+	- R1 was incorrectly specified as 3.3 kohms, which made the DONE LED stupendously bright (even though it was around half the rated current). At voltages above 18V, the power dissipated by that resistor exceeded its maximum limit. I updated the design to use 10 kohm resistors, which helps with the brightness of DONE (at the cost of making CHRG dimmer). I also manually reworked all the prototype boards to replace R1 with a 10 kohm resistor and marked these boards with "10k" in Sharpie to reflect that update.
