@@ -39,7 +39,7 @@ I wanted my board to fulfil the following requirements:
 9. Allow for user-adjustable MPP voltage.
 10. Allow for user-adjustable maximum charge current.
 
-As of this writing, I've designed variants that fulfil items #1-8, and intend to add #=10 in the near future.
+As of this writing, I've designed variants that fulfil items #1-9, and intend to add #10 in the near future.
 
 ### Design Variants
 #### Unprotected "Core" Module (Mod 0)
