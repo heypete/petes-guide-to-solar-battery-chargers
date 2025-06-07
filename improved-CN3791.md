@@ -88,7 +88,7 @@ LEDs indicate when the battery is charging (yellow) and when charging is complet
 #### Core + XB5358D0 Battery Protection IC (Mod 3)
 
 ### Hardware Revisions
-- **Pre-production prototype**. June 2025. Limited run of 10 boards made by JLCPCB. Labeled "V1.0" on silkscreen and handwritten Sharpie markings numbering each unit (P1-P10).
+- **Pre-production prototype**. June 2025. Limited run of 10 boards made by JLCPCB. Green soldermask with lead-free HASL pads. Labeled "V1.0" on silkscreen and handwritten Sharpie markings numbering each unit (P1-P10).
     - Initial design of the XB8089D0 (Mod 2) variant.
 	- I manually reworked all the prototype boards to replace R1 with a 10 kohm resistor and marked those boards with "10k" in Sharpie to reflect that update. (See Version 1.0 below for details.)
 	
