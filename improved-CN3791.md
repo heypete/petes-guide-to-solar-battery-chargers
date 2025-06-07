@@ -39,3 +39,7 @@ I wanted my board to fulfil the following requirements:
 9. Allow for user-adjustable maximum charge current.
 
 As of this writing, I've designed variants that fulfil items #1-8, and intend to add #9 in the near future.
+
+### Design Variants
+#### Unprotected "Core" Module
+[![A schematic of the basic "core" module with no battery protection circuitry.](images/core_schematic-small.png)](images/core_schematic.png)
