@@ -97,6 +97,6 @@ LEDs indicate when the battery is charging (yellow) and when charging is complet
 	    - The GND hole next to LOAD OUT was incorrectly sized and was too small for standard pin headers. Hole resized to match other holes (0.060" pad, 0.040" hole).
 	    - The MPP hole was too close to the potentiometer and made things a bit crowded when holding multimeter probes and a screwdriver. It was moved somewhat further away.
 	    - The BAT and GND hole positions and labels were reversed, such that BAT was on the right and GND was on the left. Although correctly labeled, the inconsistency in positioning could be confusing. This was the opposite of the Vin/GND and LOAD OUT/GND holes, and was updated to be consistent with the others.
-    	- The polarity markings on each of the JST connectors was 0.045" in height, which was very small. The size was increased to 0.060".
+    	- The polarity markings by each of the JST connectors was 0.045" in height, which was very small. The size was increased to 0.060".
     	- The vias for the sense lines were tented and not easily usable as test points. Design updated to exclude soldermask from the top of the vias.
     	- R1 was incorrectly specified as 3.3 kohms, which made the DONE LED stupendously bright (even though it was around half the rated current). At voltages above 18V, the power dissipated by that resistor exceeded its maximum limit. I updated the design to use 10 kohm resistors to reduce the current and power dissipation, which helps with the brightness of DONE (at the cost of making CHRG dimmer).
