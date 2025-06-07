@@ -20,7 +20,9 @@ However, I don't like these boards for several reasons:
 	8. They have no mounting holes.
 	9. The 50 ohm current sense resistor sets a charge limit of 2.4A.
 
-Therefore, I set out to design my own.
+Therefore, I set out to design my own. Read on!
+
+**Terminology note**: MPPT stands for "maximum power point tracking", where a controller adjusts the current drawn by the load to maximum the power available from the source as conditions vary, such as when the sun is shaded by a cloud or temperatures change. Constant-voltage "MPPT" controllers like the CN3791 are much more basic than "true MPPT" controllers, and maximize the delivered power subject to the maximum charge current limit and the ability of the source to maintain the user-specified MPP voltage. If the input voltage falls below the MPP voltage, the controller will dynamically reduce the charge current to maintain the MPP voltage. One could argue that constant voltage MPPT controllers are not, strictly speaking, MPPT since they don't actually *track* the maximum power point. However, several manufacturer of similar ICs use the "MPPT" descriptor and I'll use that same terminology here.
 
 ## Pete's Improved CN3791 Board
 ### Basic Design Principles
@@ -33,7 +35,7 @@ I wanted my board to fulfil the following requirements:
 6. Be able to accept input voltages up to around 25V DC.
 7. Be modular to allow several design variants, namely:
     1. A "core" that includes the key power supply elements, connectors, etc. but nothing else.
-	2. A variant with a [DW01A](https://www.best-microcontroller-projects.com/dw01a.html) battery protection chip, for those who want to maximize the energy they can get out of their battery by having a low-voltage cut-off limit of 2.5V.
+	2. A variant with a [DW01A](https://www.best-microcontroller-projects.com/dw01a.html) battery protection chip, for those who want to safely maximize the energy they can get out of their battery by having a low-voltage cut-off limit of 2.5V.
 	3. A variant with a battery protection chip with a higher cut-off voltage to play nice with RAK Wireless Meshtastaic nodes; some people have reported "brownout" issues when the battery voltage gets too low. I ended up making two variants, one with a [XB8089D0](files/Datasheet_XB8089D0.pdf) (10A overcurrent limit) and one with a [XB5358D0](files/Datasheet_XB5358D0.pdf) (3.3A overcurrent limit). Both have a low-voltage cut-off limit of 2.9V, which is perfect.
 8. Have only the battery current pass through the current sense resistor. The load should be connected before the resistor so the charger can properly detect the charging current and terminate the charge when appropriate.
 9. Allow for user-adjustable MPP voltage.
