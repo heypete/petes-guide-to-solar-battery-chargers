@@ -17,5 +17,5 @@ The CN3791, made by
 I first considered CN3791 board purchased on the internet (See Figure 1).
 
 <a id="figure1"></a>
-[![Generic CN3791 Board](images/CN3791_generic_board-small.jpg)]([images/CN3791_generic_board.jpg])  
+[![Generic CN3791 Board](images/CN3791_generic_board-small.jpg)](images/CN3791_generic_board.jpg)  
 *Figure 1: A generic CN3791 board.*
