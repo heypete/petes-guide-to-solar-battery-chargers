@@ -85,7 +85,7 @@ Keith at [Voltaic Enclosures](https://www.voltaicenclosures.com/) sells a [stand
 As of mid-June 2025, the XB8089D0 costs about $0.15.
 
 #### XB5358D0
-The XB5358D0 is the essentially the same as the XB8089D0, but in a smaller SOT-23-5 package and an overcurrent limit of 3.3A.
+The XB5358D0 is the essentially the same as the XB8089D0, but in a smaller SOT-23-5 package and with an overcurrent limit of 3.3A.
 
 As of mid-June 2025, the XB5358D0 costs about $0.17.
 
@@ -97,7 +97,7 @@ As of mid-June 2025, the XB5358D0 costs about $0.17.
 ### Types of Chargers
 #### Linear Chargers
 #### Maximum Power Point Tracking Chargers
-#### When does t
+#### Charger Type Considerations
 
 ***
 ## List of Charger ICs
