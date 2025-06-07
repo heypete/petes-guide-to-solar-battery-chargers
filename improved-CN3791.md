@@ -94,7 +94,7 @@ LEDs indicate when the battery is charging (yellow) and when charging is complet
 	
 - **Version 1.0** Labeled "V1.0" on the silkscreen. No Sharpie markings.
     - Bugs fixed in this version:
-	    - The GND hole next to LOAD OUT was incorrectly sized and is too small for pin headers. Hole resized to match other holes (0.060" pad, 0.040" hole).
+	    - The GND hole next to LOAD OUT was incorrectly sized and was too small for standard pin headers. Hole resized to match other holes (0.060" pad, 0.040" hole).
 	    - The MPP hole was too close to the potentiometer and made things a bit crowded when holding multimeter probes and a screwdriver. It was moved somewhat further away.
 	    - The BAT and GND hole positions and labels were reversed, such that BAT was on the right and GND was on the left. This was the opposite of the Vin/GND and LOAD OUT/GND holes, and was updated to be consistent with the others.
     	- The polarity markings on each of the JST connectors was 0.045" in height, which was very small. The size was increased to 0.060".
