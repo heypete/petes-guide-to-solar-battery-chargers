@@ -59,6 +59,7 @@ This is the basic core that is used in my other variants. The schematic shows al
 - Current (Vin, LOAD, and BAT connectors): 3 A (max).
 - Temperature range: -25C to +70C.
 - Battery protection: None.
+- 1oz copper thickness. Traces sized to handle up to around 3A.
 
 ##### Remarks
 
@@ -87,11 +88,15 @@ LEDs indicate when the battery is charging (yellow) and when charging is complet
 #### Core + XB5358D0 Battery Protection IC (Mod 3)
 
 ### Hardware Revisions
-- **Pre-production prototype**. Limited run of 10 boards made by JLCPCB. Labeled "V1.0" on silkscreen and handwritten Sharpie markings numbering each unit (P1-P10).
+- **Pre-production prototype**. June 2025. Limited run of 10 boards made by JLCPCB. Labeled "V1.0" on silkscreen and handwritten Sharpie markings numbering each unit (P1-P10).
     - Initial design of the XB8089D0 (Mod 2) variant.
-	- The GND hole next to LOAD OUT was incorrectly sized and is too small for pin headers. This was corrected.
-	- The MPP hole was too close to the potentiometer and made things a bit crowded when holding multimeter probes and a screwdriver. It was moved somewhat further away.
-	- The BAT and GND hole positions and labels were reversed, such that BAT was on the right and GND was on the left. This was the opposite of the Vin/GND and LOAD OUT/GND holes, and was updated to be consistent with the others.
-	- The polarity markings on each of the JST connectors was 0.045" in height, which was very small. The size was increased to 0.060".
-	- The vias for the sense lines were tented and not easily usable as test points.
-	- R1 was incorrectly specified as 3.3 kohms, which made the DONE LED stupendously bright (even though it was around half the rated current). At voltages above 18V, the power dissipated by that resistor exceeded its maximum limit. I updated the design to use 10 kohm resistors to reduce the current and power dissipation, which helps with the brightness of DONE (at the cost of making CHRG dimmer). I also manually reworked all the prototype boards to replace R1 with a 10 kohm resistor and marked these boards with "10k" in Sharpie to reflect that update.
+	- I manually reworked all the prototype boards to replace R1 with a 10 kohm resistor and marked those boards with "10k" in Sharpie to reflect that update. (See Version 1.0 below for details.)
+	
+- **Version 1.0** Labeled "V1.0" on the silkscreen. No Sharpie markings.
+    - Bugs fixed in this version:
+	    - The GND hole next to LOAD OUT was incorrectly sized and is too small for pin headers. Hole resized to match other holes (0.060" pad, 0.040" hole).
+	    - The MPP hole was too close to the potentiometer and made things a bit crowded when holding multimeter probes and a screwdriver. It was moved somewhat further away.
+	    - The BAT and GND hole positions and labels were reversed, such that BAT was on the right and GND was on the left. This was the opposite of the Vin/GND and LOAD OUT/GND holes, and was updated to be consistent with the others.
+    	- The polarity markings on each of the JST connectors was 0.045" in height, which was very small. The size was increased to 0.060".
+    	- The vias for the sense lines were tented and not easily usable as test points. Design updated to exclude soldermask from the top of the vias.
+    	- R1 was incorrectly specified as 3.3 kohms, which made the DONE LED stupendously bright (even though it was around half the rated current). At voltages above 18V, the power dissipated by that resistor exceeded its maximum limit. I updated the design to use 10 kohm resistors to reduce the current and power dissipation, which helps with the brightness of DONE (at the cost of making CHRG dimmer).
