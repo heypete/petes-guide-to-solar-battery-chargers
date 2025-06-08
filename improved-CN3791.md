@@ -84,6 +84,17 @@ Each corner has a large, 2 mm mounting hole that is electrically isolated from t
 LEDs indicate when the battery is charging (yellow) and when charging is complete (green).
 
 #### Core + DW01A Battery Protection IC (Mod 1)
+[![A schematic of the basic "core" module with the DW01A battery protection IC.](images/core_dw01a_schematic-small.png)](images/core_dw01a_schematic.png)
+
+[![A rendering of the basic "core" module PCB with the DW01A battery protection circuitry.](images/core_dw01a_pcb-small.png)](images/core_dw01a_pcb.png)
+
+Here's a rendering of the Mod 1 variant of the board, which is the core + a DW01A battery protection IC + a 8205A dual MOSFET for current sensing and disconnecting the battery when faults are detected.
+
+This board is 2" by 1.3".
+
+The 8205A limits the maximum current through the BAT connector to about 3A.
+
+All other specifications are the same as the core board.
 
 #### Core + XB8089D0 Battery Protection IC (Mod 2)
 
