@@ -113,7 +113,7 @@ The Mod 2 variant uses an XB8089D0 for battery protection. It has a overdischarg
 
 The Mod 3 variant uses an XB53538D0 for battery protection. It also has an overdischarge low-voltage cutoff of 2.9V, doesn't require an external MOSFET, and has an overcurrent limit of 3.3A.
 
-### Design Approach
+### Design Approach & Calculations
 The core of this board is a [buck converter](https://en.wikipedia.org/wiki/Buck_converter) driven by the CN3791. Fortunately, there's a lot of good information available from a variety of sources regarding how to properly design one. Since I'm a technical person, I'm going to walk through the calculations and design considerations that went into designing this board here.
 
 My primary references are the [CN3791 datasheet](files/Datasheet_CN3791.pdf), [PCB Layout Techniques of Buck Converter](files/rohm-buck-converter-application-note.pdf) by Rohm Semiconductor, and [Basic Calculation of a Buck Converter's Power Stage](files/slva477b.pdf) by Texas Instruments.
