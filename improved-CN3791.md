@@ -97,6 +97,13 @@ The 8205A limits the maximum current through the BAT connector to about 3A.
 All other specifications are the same as the core board.
 
 #### Core + XB8089D0 Battery Protection IC (Mod 2)
+[![A schematic of the basic "core" module with the XB8089D0 battery protection IC.](images/core_xb8089d0_schematic-small.png)](images/core_xb8089d0_schematic.png)
+
+[![A rendering of the basic "core" module PCB with the XB8089D0 battery protection circuitry.](images/core_xb8089d0_pcb-small.png)](images/core_xb8089d0_pcb.png)
+
+[![A picture the basic "core" module PCB with the XB8089D0 battery protection circuitry, as assembled.](images/core_xb8089d0_photo-small.png)](images/core_xb8089d0_photo.png)
+
+The Mod 2 variant uses an XB8089D0 for battery protection. It has a overdischarge low-voltage cutoff of 2.9V and does not require an external MOSFET. The image above shows [the prototype version](#hardware-revisions) described below.
 
 #### Core + XB5358D0 Battery Protection IC (Mod 3)
 
