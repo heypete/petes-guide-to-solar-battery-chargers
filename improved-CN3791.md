@@ -208,6 +208,8 @@ The datasheet calls for a 0.22 uF ceramic capacitor in series with a 120 ohm res
 
 The VG pin requires a 0.10 uF ceramic capacitor between the VG and VCC pin. VG is clamped such that `(VCC - VG) = 8 V` max. Just to be safe, I used a 50V capacitor.
 
+Nick, an engineer at Shanghai Consonance, stated that any noise on the CSP and BAT pins could be reduced by adding 100 ohm resistors in series with the traces from the current sense resistor, and a 1 uF capacitor between the two sense lines. He even provided a [helpful diagram](files/csp-bat-noise-reduction-schematic.png).
+
 ### Hardware Revisions
 - **Pre-production prototype**. June 2025. Limited run of 10 boards made by JLCPCB. Green soldermask with lead-free HASL pads. Labeled "V1.0" on silkscreen and handwritten Sharpie markings numbering each unit (P1-P10).
     - Initial design of the XB8089D0 (Mod 2) variant.
