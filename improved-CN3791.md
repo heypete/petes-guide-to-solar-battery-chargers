@@ -84,10 +84,131 @@ Each corner has a large, 2 mm mounting hole that is electrically isolated from t
 LEDs indicate when the battery is charging (yellow) and when charging is complete (green).
 
 #### Core + DW01A Battery Protection IC (Mod 1)
+[![A schematic of the basic "core" module with the DW01A battery protection IC.](images/core_dw01a_schematic-small.png)](images/core_dw01a_schematic.png)
+
+[![A rendering of the basic "core" module PCB with the DW01A battery protection circuitry.](images/core_dw01a_pcb-small.png)](images/core_dw01a_pcb.png)
+
+Here's a rendering of the Mod 1 variant of the board, which is the core + a DW01A battery protection IC + a 8205A dual MOSFET for current sensing and disconnecting the battery when faults are detected.
+
+This board is 2" by 1.3".
+
+The 8205A limits the maximum current through the BAT connector to about 3A.
+
+All other specifications are the same as the core board.
 
 #### Core + XB8089D0 Battery Protection IC (Mod 2)
+[![A schematic of the basic "core" module with the XB8089D0 battery protection IC.](images/core_xb8089d0_schematic-small.png)](images/core_xb8089d0_schematic.png)
+
+[![A rendering of the basic "core" module PCB with the XB8089D0 battery protection circuitry.](images/core_xb8089d0_pcb-small.png)](images/core_xb8089d0_pcb.png)
+
+[![A picture the basic "core" module PCB with the XB8089D0 battery protection circuitry, as assembled.](images/core_xb8089d0_photo-small.png)](images/core_xb8089d0_photo.png)  
+*[The initial prototype version](#hardware-revisions). The rough texture near R1 (immediately below the SOLAR IN text) is excess flux from my hand-reworking of these prototype boards to replace the R1 resistor that I hadn't cleaned yet.*
+
+The Mod 2 variant uses an XB8089D0 for battery protection. It has a overdischarge low-voltage cutoff of 2.9V, does not require an external MOSFET, and has an overcurrent limit of 10A.
 
 #### Core + XB5358D0 Battery Protection IC (Mod 3)
+[![A schematic of the basic "core" module with the XB5358D0 battery protection IC.](images/core_xb5358d0_schematic-small.png)](images/core_xb5358d0_schematic.png)
+
+[![A rendering of the basic "core" module PCB with the XB5358D0 battery protection circuitry.](images/core_xb5358d0_pcb-small.png)](images/core_xb5358d0_pcb.png)
+
+The Mod 3 variant uses an XB53538D0 for battery protection. It also has an overdischarge low-voltage cutoff of 2.9V, doesn't require an external MOSFET, and has an overcurrent limit of 3.3A.
+
+### Design Approach & Calculations
+The core of this board is a [buck converter](https://en.wikipedia.org/wiki/Buck_converter) driven by the CN3791. Fortunately, there's a lot of good information available from a variety of sources regarding how to properly design one. Since I'm a technical person, I'm going to walk through the calculations and design considerations that went into designing this board here.
+
+My primary references are the [CN3791 datasheet](files/Datasheet_CN3791.pdf), [PCB Layout Techniques of Buck Converter](files/rohm-buck-converter-application-note.pdf) by Rohm Semiconductor, and [Basic Calculation of a Buck Converter's Power Stage](files/slva477b.pdf) by Texas Instruments.
+
+#### Resistor Selection
+##### MPP Voltage
+The CN3791 datasheet says that the MPP voltage can be set with a resistor divider network as follows: `Vmpp = 1.205 * (1 + R3/R4)`. My board replaces the fixed resistors R3 and R4 with a potentiometer where the wiper is connected to the MPPT pin, allowing the user to set the MPP voltage.
+
+As a general rule of thumb, I like to have voltage dividers have a total resistance of around 100,000 times the input voltage. Since most of my nodes use 5V solar panels, I chose a 500,000 ohm potentiometer which results in a current of 10 microamps through the potentiometer. I designed the board for up to 28V input, so 28V going into 500 kohms results in 56 uA through the potentiometer. The worst-case power dissipation is less than 2 mW, which is well within its 500mW rating.
+
+Texas Instruments' [Basic Calculation of a Buck Converter's Power Stage](files/slva477b.pdf) application note says that the current through resistive divider to ground must be at least 100 times the feedback bias current in order to add less than 1% inaccuracy to the voltage measurement.
+
+The CN3791 datasheet says the MPPT feedback pin is high-impedance and typically no current flows through it, but that up to 100 nA might flow. With a 500 kohm potentiometer and 4.5V minimum input voltage, the current through the potentiometer is 9 uA, or 90x the maximum feedback pin current, which is close enough to 100x for me and I've not observed any feedback instability during testing.
+
+##### Maximum Charge Current
+The maximum charge current is set with the Rcs resistor, `Ich = 120 mV / Rcs`. I wanted a 1A maximum charge current, so I used a 120 mohm (0.120 ohm) resistor. I wanted to minimize board space, so I would prefer a 1206 resistor rather than the larger 2512 used by other modules. The resistor I selected has a 250mW maximum power limit. At 1A, the power dissipated by the resistor is `P = (1 A)^2 * (0.120 ohms) = 120mW`, which is more than half the maximum of the resistor rating, which leaves a generous margin. The resistor is also soldered to wide copper traces that can help with power dissipation.
+
+##### LED Current-Limiting Resistor
+The DONE and CHRG LEDs are connected to VCC and the CN3791's inverse DONE and inverse CHRG pins to ground. The CN3791's pins can handle a minimum of 7 mA each and the LEDs have a maximum current limit of 10 mA (DONE) and 20 mA (CHRG), respectively. Since the LEDs are mutually exclusive and can't be on at the same time, a single current-limiting resistor can be used.
+
+The forward voltage drop of the green DONE LED is 2.9V, while the yellow CHRG LED has a forward voltage drop of 2.2 V.
+
+The maximum input voltage of the board is 28V, so neglecting the voltage drop, a 10 kohm resistor will result in a maximum current of 2.8 mA, well below the LED's limits. The maximum power dissipated by a 10 kohm resistor passing 2.8 mA is 78.4 mW, which is below the resistor's 100 mW rating. At lower voltages, the power dissipated by the resistor decreases substantially: with an input voltage of 12V, the resistor dissipates about 15 mW.
+
+#### MOSFET Selection
+The core module uses two P-channel MOSFETs: one for reverse polarity/leakage current protection, and one as the switching element. I wanted both to have a drain-source voltage limit of at least 30V, a continuious current rating of at least 3A, a low turn-on threshold voltage, a low drain-source on-resistance with a gate-source voltage of -4.5V (the minimum voltage at which the CN3791 will run the switcher), a maximum gate-source voltage of at least -10V (the CN3791 clamps the drive voltage to -8V), and a low total gate charge and reverse transfer capacitance.
+
+The [AO3401A MOSFET](files/Datasheet_A03401A.pdf) seems to match all these requirements. It has a drain-source voltage of 30V, a continuious current rating of 3.2A at 70C (4A at 25C), a turn-on threshold voltage of -0.9V, a maximum drain-source on-resistance of 60 mohm at Vgs=-4.5V (typically 47 mohm), a maximum drain-source on-resistance of 85 mohm (typ. 60) at Vgs=-2.5 which is less than the CN3791's turn-on voltage, a maximum gate-source voltage of -12V, and a reverse transfer capacitance of 55 pF.
+
+The CN3791 datasheet provides a formula for calculating the power dissipated by the transistor: `Pd = (Vbat/Vcc) * (Rds(on)) * (Ich)^2 + (1+0.005 dT)`, where dT is the difference between actual ambient temperature and room temperature. I plugged in worst-case values of Rds(on)=60 mohm, Vbat=4.2V, Vcc=4.5V, Ich=1A, and dT=80C (assuming room temperature is 20C and the operating temperature is 100C). The result is a power dissipation of 79 mW, which is well within the MOSFET's limit of 900 mA at 70C ambient.
+
+For the reverse polarity protection MOSFET, the CN3791 datasheet recomments a 22 kohm gate resistor connected to the VD pin of the IC.
+
+#### Diode Selection
+The CN3791 datasheet specifies the diode must be a Schottky diode with a current limit of at least the maximum charge current and a voltage rating of at least the maximum expect input voltage. However, they warn against diodes being excessively large as they'd have larger transition losses due to having a larger capacitance.
+
+The [SS54 diode](files/Datasheet_SS54.pdf) meets those requirements: it has a maximum peak reverse/blocking voltage of 40V, a maximum average forward current of 5A, and a low maximum forward diode drop of 550mV. Capacitance is only 500 pF.
+
+#### Inductor Selection
+The CN3791 datasheet says that the inductance `L` of the inductor should be chosen such that that:
+- It limits the ripple current to "within a reasonable range", which they define as `0.3 * Ich` amps. For a 1 A charge current, that comes out to 300 mA.
+- `Lmin > 5 * (Vcc - Vbat)` microhenries (uH).
+
+The datasheet gives an equation that can be rewritten to allow one to calculate the inductance: `L = (1/(f*Iripple))*Vbat*(1-(Vbat/VCC))`.
+
+If f = 300,000 Hz (given in the datasheet) Iripple = 0.3 A, Vbat = 4.2V, and VCC = 4.5V, this yields an inductance of 3.1 uH minimum.
+
+TI's application note says that a reasonable range for ripple current as 0.2-0.4 times the maximum charge current, so 0.3 seems to be reasonable.
+
+TI gives an equation for calculating a good inductor value that I've rewritten with consistent notation as: `L = (Vbat * (Vcc - Vbat))/(Iripple * f * Vcc)`. Using the same parameters as above, this also gives a recommendation of 3.1 uH. Nice.
+
+I plan to make a variant with user-selectable charge current as low as 500 mA, which would require at least a 6.1 uH inductor. Inductors typically have an uncertainty of +/- 20%, so a 10 uH inductor would give plenty of margin for the system during the worst-case scenario of low charge current and a low Vcc. It also meets the `L > 5 * (Vcc - Vbat)` uH requirement.
+
+I selected a 10 uH molded inductor with a current limit of 5.5 A. The inductor windings are molded into an "alloy sponge powder" which minimizes coil vibration and magnetic field leakage from the inductor. The widely available CN3791 modules from other vendors also often use a 10 uF inductor, so this matches my decision-making process.
+
+#### Capacitor Selection
+##### Input Capacitors
+The CN3791 datasheet recommends the following input capacitors:
+- An electrolytic capacitor (capacitance unspecified) for low-frequency filtering.
+- A ceramic capacitor with a value between 1 uF to 10 uF.
+- A high-frequency capacitor with a value between 0.047 uF and 1 uF.
+
+TI's application note states to follow the datasheet recommendation and use low-ESR ceramic capacitors of X5R dielectric or better.
+
+I wanted to avoid electrolytic capacitors, so I used three ceramic capacitors: a 10 uF one to fulfil the first requirement, a 2.2 uF one for the second, and a 0.1 uF one for the third. All use dielectrics X5R or X7R.
+
+The CN3791 boards from other vendors have only 47 uF electrolytic capacitor on their input, and no other ceramic input capacitors. The ceramic capacitors around the CN3791 are for the loop compensation and gate driver power supply, not for the IC itself or the switching MOSFET.
+
+The input capacitors are located as close as possible to the switching MOSFET and the CN3791's VCC pin and are connected to a large ground plane.
+
+All input capacitors are rated to 50V.
+
+##### Output Capacitors
+The datasheet recommends:
+- A 10 uF electrolytic capacitor for low-frequency filtering.
+- A ceramic capacitor in the range of 1-10 uF.
+
+TI's application note recommends low-ESR ceramic capacitors with X5R or better dielectric.
+
+They provide a formula to calculate the minimim capacitance desired output voltage ripple: `Cout = (Iripple)/(8 * f * dVout)`, where dVout is the desired output voltage ripple. For Iripple = 0.3A, f = 300,000 Hz, and dVout = 0.050 volts, I need at least 2.5 uF of output capacitance.
+
+TI also says the capacitor's ESR adds some more ripple to the output voltage. The ripple from the capacitor ESR can be calculated as `Vout_esr = ESR * Iripple`. For an ESR of 0.1 mohm at 300 kHz (the highest value out of my input capacitors), that would add 0.030 V ripple, for a total of 0.080 V ripple maximum.
+
+TI's application note also includes an equation to calculate the minimum output capacitance due to the output transint response of the system causing a voltage overshoot: `Vout_min_os = (dIout^2 * L)/(2 * Vbat * Vos)`, where dIout is the maximum output current change in the application (I used 0.5 A, as there generally shouldn't be large current transients when charging a battery), L 10 uH, Vbat = 4.2V, and Vos = 0.050 V, which results in a minimum capacitance of about 6 uH.
+
+To minimize the BOM on the board and to ease design, I simply used the same type and value capacitors for the output as I did for the input. They are placed as close as possible to the inductor output and the input capacitors and are connected to the same large ground plane as the input capacitors. Since I'm using the same capacitors for both input and output, the output capacitors are also rated to 50V.
+
+For reference, the CN3791 boards from other vendors use a 10 uF tantalum capacitor and an unknown ceramic capacitor far from the input capacitor, which is less than ideal.
+
+##### Other Capacitors
+The datasheet calls for a 0.22 uF ceramic capacitor in series with a 120 ohm resistor between the CN3791's COM pin and GND for loop compensation. COM never exceeds 6.5V, so I used a 25V capacitor.
+
+The VG pin requires a 0.10 uF ceramic capacitor between the VG and VCC pin. VG is clamped such that `(VCC - VG) = 8 V` max. Just to be safe, I used a 50V capacitor.
+
+Nick, an engineer at Shanghai Consonance, stated that any noise on the CSP and BAT pins could be reduced by adding 100 ohm resistors in series with the traces from the current sense resistor, and a 1 uF capacitor between the two sense lines. He even provided a [helpful diagram](images/csp-bat-noise-reduction-schematic.png). (Thanks, Nick!)
 
 ### Hardware Revisions
 - **Pre-production prototype**. June 2025. Limited run of 10 boards made by JLCPCB. Green soldermask with lead-free HASL pads. Labeled "V1.0" on silkscreen and handwritten Sharpie markings numbering each unit (P1-P10).
