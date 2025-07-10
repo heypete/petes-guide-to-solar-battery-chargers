@@ -141,11 +141,13 @@ The maximum input voltage of the board is 28V, so neglecting the voltage drop, a
 #### MOSFET Selection
 The core module uses two P-channel MOSFETs: one for reverse polarity/leakage current protection, and one as the switching element. I wanted both to have a drain-source voltage limit of at least 30V, a continuious current rating of at least 3A, a low turn-on threshold voltage, a low drain-source on-resistance with a gate-source voltage of -4.5V (the minimum voltage at which the CN3791 will run the switcher), a maximum gate-source voltage of at least -10V (the CN3791 clamps the drive voltage to -8V), and a low total gate charge and reverse transfer capacitance.
 
-The [AO3401A MOSFET](files/Datasheet_A03401A.pdf) seems to match all these requirements. It has a drain-source voltage of 30V, a continuious current rating of 3.2A at 70C (4A at 25C), a turn-on threshold voltage of -0.9V, a maximum drain-source on-resistance of 60 mohm at Vgs=-4.5V (typically 47 mohm), a maximum drain-source on-resistance of 85 mohm (typ. 60) at Vgs=-2.5 which is less than the CN3791's turn-on voltage, a maximum gate-source voltage of -12V, and a reverse transfer capacitance of 55 pF.
+The [AO3401A MOSFET](files/Datasheet_AO3401A.pdf) seems to match all these requirements. It has a drain-source voltage of 30V, a continuious current rating of 3.2A at 70C (4A at 25C), a turn-on threshold voltage of -0.9V, a maximum drain-source on resistance of 60 mohm at Vgs=-4.5V (typically 47 mohm), a maximum drain-source on resistance of 85 mohm (typ. 60) at Vgs=-2.5 which is less than the CN3791's turn-on voltage, a maximum gate-source voltage of -12V, and a reverse transfer capacitance of 55 pF.
 
-The CN3791 datasheet provides a formula for calculating the power dissipated by the transistor: `Pd = (Vbat/Vcc) * (Rds(on)) * (Ich)^2 + (1+0.005 dT)`, where dT is the difference between actual ambient temperature and room temperature. I plugged in worst-case values of Rds(on)=60 mohm, Vbat=4.2V, Vcc=4.5V, Ich=1A, and dT=80C (assuming room temperature is 20C and the operating temperature is 100C). The result is a power dissipation of 79 mW, which is well within the MOSFET's limit of 900 mA at 70C ambient.
+A common Figure of Merit for switching MOSFETs is `FOM = Rds(on) * Qg`, or the drain-source on resistance multiplied by the gate charge. Using the typical values with a gate-source voltage of -4.5V, the FOM is `47 (mohm) * 7 (nC) = 329`. This compares favorably to other MOSFETs I was able to locate, particularly those as readily available and inexpensive as the AO3401A. Thermal camera testing shows the switching MOSFET's package surface is about 60-65 degrees Celsius in ambient conditions when connected to a 24V solar panel and the charging board is charging a battery at 1A. 
 
-For the reverse polarity protection MOSFET, the CN3791 datasheet recomments a 22 kohm gate resistor connected to the VD pin of the IC.
+The CN3791 datasheet provides a formula for calculating the power dissipated by the transistor: `Pd = (Vbat/Vcc) * (Rds(on)) * (Ich)^2 + (1+0.005 dT)`, where dT is the difference between actual ambient temperature and room temperature. I plugged in worst-case values of Rds(on)=60 mohm, Vbat=4.2V, Vcc=4.5V, Ich=1A, and dT=80C (assuming room temperature is 20C and the operating temperature is 100C). The result is a power dissipation of 79 mW, which is well within the MOSFET's limit of 900 mW at 70C ambient.
+
+For the reverse polarity protection MOSFET, the CN3791 datasheet recomments a 22 kohm gate resistor connected to the VD pin of the IC. Thermal camera testing of the AO3401A used for reverse polarity protection shows the MOSFET is essentially at ambient temperature with no significant temperature rise. 
 
 #### Diode Selection
 The CN3791 datasheet specifies the diode must be a Schottky diode with a current limit of at least the maximum charge current and a voltage rating of at least the maximum expect input voltage. However, they warn against diodes being excessively large as they'd have larger transition losses due to having a larger capacitance.
@@ -209,6 +211,9 @@ The datasheet calls for a 0.22 uF ceramic capacitor in series with a 120 ohm res
 The VG pin requires a 0.10 uF ceramic capacitor between the VG and VCC pin. VG is clamped such that `(VCC - VG) = 8 V` max. Just to be safe, I used a 50V capacitor.
 
 Nick, an engineer at Shanghai Consonance, stated that any noise on the CSP and BAT pins could be reduced by adding 100 ohm resistors in series with the traces from the current sense resistor, and a 1 uF capacitor between the two sense lines. He even provided a [helpful diagram](images/csp-bat-noise-reduction-schematic.png). (Thanks, Nick!)
+
+#### Efficiency & Thermal Calculations
+
 
 ### Hardware Revisions
 - **Pre-production prototype**. June 2025. Limited run of 10 boards made by JLCPCB. Green soldermask with lead-free HASL pads. Labeled "V1.0" on silkscreen and handwritten Sharpie markings numbering each unit (P1-P10).
