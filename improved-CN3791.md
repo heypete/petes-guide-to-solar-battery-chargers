@@ -228,3 +228,7 @@ Nick, an engineer at Shanghai Consonance, stated that any noise on the CSP and B
     	- The polarity markings by each of the JST connectors was 0.045" in height, which was very small. The size was increased to 0.060".
     	- The vias for the sense lines were tented and not easily usable as test points. The design was updated to exclude soldermask from the tops of the vias.
     	- R1 was incorrectly specified as 3.3 kohms, which made the DONE LED stupendously bright (even though it was around half the rated current). At voltages above 18V, the power dissipated by that resistor exceeded its maximum limit. I updated the design to use 10 kohm resistors to reduce the current and power dissipation, which helps with the brightness of DONE (at the cost of making CHRG dimmer).
+		
+- **Version 1.1** Labeled "V1.1" on the silkscreen.
+	- Enlarged copper pads on the VIN, LOAD, BAT, and MPPT terminals.
+	- Remove "-1A" from the current sense resistor silkscreen since this resistor can be replaced with any arbitrary resistor.
