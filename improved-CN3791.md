@@ -147,7 +147,9 @@ A common Figure of Merit for switching MOSFETs is `FOM = Rds(on) * Qg`, or the d
 
 The CN3791 datasheet provides a formula for calculating the power dissipated by the transistor: `Pd = (Vbat/Vcc) * (Rds(on)) * (Ich)^2 + (1+0.005 dT)`, where dT is the difference between actual ambient temperature and room temperature. I plugged in worst-case values of Rds(on)=60 mohm, Vbat=4.2V, Vcc=4.5V, Ich=1A, and dT=80C (assuming room temperature is 20C and the operating temperature is 100C). The result is a power dissipation of 79 mW, which is well within the MOSFET's limit of 900 mW at 70C ambient.
 
-For the reverse polarity protection MOSFET, the CN3791 datasheet recomments a 22 kohm gate resistor connected to the VD pin of the IC. Thermal camera testing of the AO3401A used for reverse polarity protection shows the MOSFET is essentially at ambient temperature with no significant temperature rise. 
+For the reverse polarity protection MOSFET, the CN3791 datasheet recomments a 22 kohm gate resistor connected to the VD pin of the IC. Thermal camera testing of the AO3401A used for reverse polarity protection shows the MOSFET is essentially at ambient temperature with no significant temperature rise.
+
+<!-- Another option is the 8-pin NCE4435, which has a 7.2A current limit at 70C, typical 21 mohm RDSon @-4.5V, 35 mohm RDSon max @-4.5V, total gate charge of 30 nC @-10V (~18 @-4.5V), and a FOM of 378 @-4.5V and 630 @-10V. All of these are within spec for the CN3795. -->
 
 #### Diode Selection
 The CN3791 datasheet specifies the diode must be a Schottky diode with a current limit of at least the maximum charge current and a voltage rating of at least the maximum expect input voltage. However, they warn against diodes being excessively large as they'd have larger transition losses due to having a larger capacitance.
@@ -231,4 +233,6 @@ Nick, an engineer at Shanghai Consonance, stated that any noise on the CSP and B
 		
 - **Version 1.1** Labeled "V1.1" on the silkscreen.
 	- Enlarged copper pads on the VIN, LOAD, BAT, and MPPT terminals.
+	- Enlarged copper pads on the current sense resistor vias to allow for testing.
+	- Remove assembly holes required by JLCPCB.
 	- Remove "-1A" from the current sense resistor silkscreen since this resistor can be replaced with any arbitrary resistor.
